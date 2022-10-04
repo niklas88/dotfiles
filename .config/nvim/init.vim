@@ -1,22 +1,11 @@
 " Vim-Plug
 call plug#begin('~/.config/nvim/plugged')
-Plug 'fatih/vim-go'
-Plug 'junegunn/seoul256.vim'
-Plug 'funorpain/vim-cpplint'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
-Plug 'neomake/neomake'
-Plug 'jamessan/vim-gnupg'
-" Add plugins to &runtimepath
+   Plug 'fatih/vim-go'
+   Plug 'junegunn/seoul256.vim'
+   Plug 'editorconfig/editorconfig-vim'
+   Plug 'neovim/nvim-lspconfig'
+   Plug 'ray-x/lsp_signature.nvim'
 call plug#end()
-
-" Disable modeline for security
-set nomodeline
-
-" formating options for text
-" see http://vimcasts.org/episodes/hard-wrapping-text/ for more infos
-set formatoptions=qrn1
-set nowrap
-set textwidth=79
 
 "" No need to be compatible with vi and lose features.
 set nocompatible
@@ -35,21 +24,30 @@ set norelativenumber
 " Set update time to 500 ms, convenient for taglists etc
 set updatetime=500
 
-" set shiftwidth to 2 by default
-set tabstop=2 shiftwidth=2
+" Basics for normal text files
+set tabstop=8 shiftwidth=8 smarttab
 set smartindent
-
-" set colorcolumn=80
 set linebreak
+" Show tab, EOL and trailing
 set list
 set listchars=tab:▸\ ,eol:¬,trail:~
-
 set background=dark
 set clipboard+=unnamedplus
 set mouse=nv
-set omnifunc=syntaxcomplete#Complete
+" Syntax and theme
+syntax on
+colo seoul256
+highlight Normal ctermbg=none
+highlight NonText ctermbg=none
 
-" Keep the horizontal cursor position when moving vertically.
+" Don't yank to default register when changing something
+nnoremap c "xc
+xnoremap c "xc
+" Don't yank to default register when pasting something
+xnoremap p "_dp
+xnoremap P "_dP
+
+"" Keep the horizontal cursor position when moving vertically.
 set nostartofline
 
 " better identation
@@ -70,24 +68,9 @@ function! OmniPopup(action)
 endfunction
 inoremap <silent><C-j> <C-R>=OmniPopup('j')<CR>
 inoremap <silent><C-k> <C-R>=OmniPopup('k')<CR>
+" Always show the info column to prevent jarring hide/appear
+set signcolumn=yes
 
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_start_length = 2
-
- " path to directory where library can be found
-let g:clang_library_path='/usr/lib/'
-let g:compilation_database="./build/compile_commands.json"
-let g:clang_use_library= 1
-
-" force vim-gnupg to use the correct GPG version
-let g:GPGExecutable = "gpg2 --trust-model always"
-
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-"set cursorline
-" higligt mode
-hi CursorLine   cterm=NONE ctermbg=darkred
-hi UnderCursor  cterm=bold ctermfg=white
 " highlight matching braces
 set showmatch
 " highlight search terms
@@ -100,15 +83,10 @@ set noerrorbells
 " show (partial) command in the last line of the screen
 " this also shows visual selection info
 set showcmd
-" automatically update the buffer if file got updated
-set autoread
-" Show the mode (insert,replace,etc.)
-set showmode
-" # Folding ----------------------------------------------------------------- {{{
+" Folding
 set foldlevelstart=3
 set foldmethod=syntax
 set foldnestmax=2
-"}}}
 
 "" Cycling through Windows quicker.
 map <C-M> <C-W>j<C-W>_
@@ -121,50 +99,39 @@ map <A-Right> <C-W><Right><C-W>|
 " Space to toggle folds.
 nnoremap <Space> za
 vnoremap <Space> za
-" More logical Y (defaul was alias for yy)
-nnoremap Y y$
 
 " # Filetype specifics
-
 augroup filtypes
+    autocmd!
     autocmd FileType matlab setlocal tabstop=4 shiftwidth=4 expandtab smartindent
-
-    " activate cpp and doxygen syntax for *.c and *.cpp files
-    autocmd FileType cpp setlocal syntax=cpp.doxygen expandtab tabstop=2 shiftwidth=2 softtabstop=2
-    autocmd FileType c setlocal syntax=cpp.doxygen expandtab tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType c setlocal syntax=cpp.doxygen tabstop=8 shiftwidth=8 softtabstop=8 cc=100 omnifunc=v:lua.vim.lsp.omnifunc
     autocmd FileType javascript setlocal expandtab shiftwidth=2 softtabstop=2
-
-    autocmd FileType tex setlocal expandtab shiftwidth=2 softtabstop=2
-    autocmd FileType tex map <F5> :w<CR>:!latexmk -xelatex -pdf %<CR>
-
-    autocmd FileType python autocmd! BufWritePost * Neomake pylint flake8 vulture mypy
-
+    autocmd FileType tex command latexmk execute "!latexmk -pdf %"
+    autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 augroup END
-
 
 " Enable secure per directory options
 set exrc
 set secure
 
-"" Syntax highlightning, but only for color terminals.
-syntax on
-"colo seoul256
-set bg=dark
-highlight Normal ctermbg=none
-highlight NonText ctermbg=none
-set guicursor=
-
-" Whitespace at end of line in red
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
-" Set hidden so we don't have to save a buffer when swtichting
-set hidden
-
-" Prepend copyriht notice
-command! Copyright :0r ~/.config/nvim/copyright_header
-" Feedback Template
-command! Feedback :0r ~/.config/nvim/feedback_template | set expandtab
+lua <<EOF
+require'lspconfig'.pyright.setup{}
+require'lspconfig'.gopls.setup{}
+require'lspconfig'.clangd.setup{}
+require'lsp_signature'.setup{
+	bind = true,
+	floating_window = false,
+	doc_lines = 0,
+	padding = '',
+	max_width = 128,
+	hint_prefix = '',
+	floating_window_off_x = 0,
+	floating_window_off_y = 0,
+	floating_window_above_cur_line = true,
+	triggered_chars = '',
+	toggle_key = '<C-s>',
+	handler_opts = {
+		border = "rounded"   -- double, rounded, single, shadow, none
+	},
+}
+EOF
