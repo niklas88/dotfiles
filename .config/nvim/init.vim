@@ -42,32 +42,6 @@ set background=dark
 set mouse=nv
 set omnifunc=syntaxcomplete#Complete
 
-" Clipboard
-lua << EOF
-local function osccopy(lines, _)
-  require('osc52').copy(table.concat(lines, '\n'))
-end
-
-local function oscpaste()
-  return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')}
-end
-
-vim.g.clipboard = {
-  name = 'osc52',
-  copy = {
-          ['+'] = osccopy,
-          ['*'] = osccopy
-          },
-  paste = {
-          ['+'] = oscpaste,
-          ['*'] = oscpaste
-  },
-  cache_enabled = 1,
-}
-
-vim.opt.clipboard = "unnamedplus"
-EOF
-
 "" Keep the horizontal cursor position when moving vertically.
 set nostartofline
 
@@ -156,3 +130,29 @@ let g:go_version_warning = 0
 
 " Fuzzy-Finder Options
 let g:fzf_action = { 'enter': 'tab split' }
+
+" Clipboard
+lua << EOF
+local function osccopy(lines, _)
+  require('osc52').copy(table.concat(lines, '\n'))
+end
+
+local function oscpaste()
+  return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')}
+end
+
+vim.g.clipboard = {
+  name = 'osc52',
+  copy = {
+          ['+'] = osccopy,
+          ['*'] = osccopy
+          },
+  paste = {
+          ['+'] = oscpaste,
+          ['*'] = oscpaste
+  },
+  cache_enabled = 1,
+}
+
+vim.opt.clipboard = "unnamedplus"
+EOF
