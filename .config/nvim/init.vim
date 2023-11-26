@@ -95,9 +95,10 @@ map <A-Up>    <C-W><Up><C-W>_
 map <A-Left>  <C-W><Left><C-W>|
 map <A-Right> <C-W><Right><C-W>|
 
-" Space to toggle folds.
-nnoremap <Space> za
-vnoremap <Space> za
+"" Quickfix navigation
+map <C-j> :cn<CR>
+map <C-k> :cp<CR>
+
 " More logical Y (defaul was alias for yy)
 nnoremap Y y$
 
@@ -122,6 +123,8 @@ set exrc
 set secure
 
 syntax on
+"" Don't be disruptive with LSP hints
+set signcolumn=no
 let g:seoul256_disable_background = v:true
 colo seoul256
 highlight Normal ctermbg=none
@@ -165,6 +168,11 @@ vim.diagnostic.config({
   },
 })
 
+local function on_list(options)
+  vim.fn.setqflist({}, ' ', options)
+  vim.api.nvim_command('cfirst')
+end
+
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
@@ -196,7 +204,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', 'sh', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', 'gr', function()
+        vim.lsp.buf.references(nil, {on_list=on_list})
+    end, opts)
     vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
     vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
     vim.keymap.set('n', '<space>wl', function()
@@ -205,7 +216,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     vim.keymap.set('n', '<space>f', function()
       vim.lsp.buf.format { async = true }
     end, opts)
