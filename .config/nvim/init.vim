@@ -159,6 +159,11 @@ vim.opt.clipboard = "unnamedplus"
 -- Setup language servers.
 local lspconfig = require('lspconfig')
 
+vim.diagnostic.config({
+  float = {
+    border = 'rounded',
+  },
+})
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -174,6 +179,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
     -- Enable completion triggered by <c-x><c-o>
     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+    -- Borders around hover and signatures
+    vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+    vim.lsp.handlers.hover,
+        {border = 'rounded'}
+    )
+    vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+    vim.lsp.handlers.signature_help,
+      {border = 'rounded'}
+    )
 
     -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -221,5 +235,9 @@ lspconfig.rust_analyzer.setup({
             },
         }
     }
+})
+
+lspconfig.clangd.setup({
+    on_attach=on_attach,
 })
 EOF
