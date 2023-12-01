@@ -5,6 +5,7 @@ Plug 'shaunsingh/seoul256.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim'
 Plug 'ojroques/nvim-osc52', {'branch': 'main'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 
 " formating options for text
@@ -164,13 +165,6 @@ local function on_list(options)
   vim.api.nvim_command('cfirst')
 end
 
-local function goto_loc(loc_func)
-  return function()
-    vim.api.nvim_command('tab split')
-    return loc_func()
-  end
-end
-
 -- Global mappings for LSP things
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
@@ -204,13 +198,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     local opts = { buffer = ev.buf }
-    vim.keymap.set('n', 'gD', goto_loc(vim.lsp.buf.declaration), opts)
-    vim.keymap.set('n', 'gd', goto_loc(vim.lsp.buf.definition), opts)
-    vim.keymap.set('n', 'gi', goto_loc(vim.lsp.buf.implementation), opts)
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
     vim.keymap.set('n', 'gr', function()
         vim.lsp.buf.references(nil, {on_list=on_list})
     end, opts)
-    vim.keymap.set('n', '<space>D', goto_loc(vim.lsp.buf.type_definition), opts)
+    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', 'sh', vim.lsp.buf.signature_help, opts)
     vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
