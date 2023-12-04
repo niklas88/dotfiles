@@ -70,6 +70,7 @@ let g:seoul256_disable_background = v:true
 colo seoul256
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
+set termguicolors
 let g:go_version_warning = 0
 
 " Better navigating through omnicomplete option list
