@@ -6,6 +6,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim'
 Plug 'ojroques/nvim-osc52', {'branch': 'main'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'stevearc/oil.nvim'
 call plug#end()
 
 " formating options for text
@@ -148,6 +149,9 @@ vim.g.clipboard = {
 }
 
 vim.opt.clipboard = "unnamedplus"
+
+-- Setup oil file browser
+require("oil").setup()
 
 -- Setup nvim-lsp
 local lspconfig = require('lspconfig')
