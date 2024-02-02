@@ -166,7 +166,7 @@ vim.api.nvim_set_hl(0, 'LeapLabelSecondary', {
   fg = 'LightYellow', bold = true, nocombine = true,
 })
 
-vim.keymap.set('n', 's', function ()
+vim.keymap.set({'n', 'v'}, 's', function ()
   require('leap').leap { target_windows = { vim.api.nvim_get_current_win() } }
 end)
 
