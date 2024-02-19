@@ -7,6 +7,7 @@ Plug 'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim'
 Plug 'ojroques/nvim-osc52', {'branch': 'main'}
 Plug 'stevearc/oil.nvim'
 Plug 'ggandor/leap.nvim'
+Plug 'nvim-lualine/lualine.nvim'
 call plug#end()
 
 " formating options for text
@@ -72,6 +73,8 @@ colo seoul256
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
 set termguicolors
+
+"" Go setup
 let g:go_version_warning = 0
 
 " Better navigating through omnicomplete option list
@@ -123,6 +126,7 @@ augroup filtypes
     autocmd FileType javascript setlocal expandtab shiftwidth=2 softtabstop=2
     autocmd FileType tex command Latexmk execute "!latexmk -pdf %" 
 augroup END
+let g:c_syntax_for_h = 1
 
 " Lua Section
 lua << EOF
@@ -172,6 +176,126 @@ end)
 
 -- Setup oil file browser
 require("oil").setup()
+
+-- Setup lualine
+-- Colors from seoul256
+local colors = {
+  bg1    = '#3c474d',
+  bg3    = '#505a60',
+  fg =     "#565656",
+  aqua = "#93b2b2",
+  paleblue = "#afeeee",
+  green = "#678568",
+  orange = "#67a9aa",
+  purple = "#c66d86",
+  red = "#a07474",
+  pink = "#d0a39f",
+  grey1  = '#868d80',
+  grey2    = '#323d43',
+  white = "#dfe0e0",
+}
+
+local custom_theme = {
+  normal = {
+    a = { bg = colors.aqua, fg = colors.grey2, gui = 'bold' },
+    b = { bg = colors.bg3, fg = colors.fg },
+    c = { bg = colors.bg1, fg = colors.fg },
+  },
+  insert = {
+    a = { bg = colors.green, fg = colors.white, gui = 'bold' },
+    b = { bg = colors.bg3, fg = colors.fg },
+    c = { bg = colors.bg1, fg = colors.fg },
+  },
+  visual = {
+    a = { bg = colors.pink, fg = colors.grey2, gui = 'bold' },
+    b = { bg = colors.bg3, fg = colors.fg },
+    c = { bg = colors.bg1, fg = colors.fg },
+  },
+  replace = {
+    a = { bg = colors.orange, fg = colors.grey2, gui = 'bold' },
+    b = { bg = colors.bg3, fg = colors.fg },
+    c = { bg = colors.bg1, fg = colors.fg },
+  },
+  command = {
+    a = { bg = colors.aqua, fg = colors.grey2, gui = 'bold' },
+    b = { bg = colors.bg3, fg = colors.fg },
+    c = { bg = colors.bg1, fg = colors.fg },
+  },
+  terminal = {
+    a = { bg = colors.purple, fg = colors.bg0, gui = 'bold' },
+    b = { bg = colors.bg3, fg = colors.fg },
+    c = { bg = colors.bg1, fg = colors.fg },
+  },
+  inactive = {
+    a = { bg = colors.bg1, fg = colors.grey1, gui = 'bold' },
+    b = { bg = colors.bg1, fg = colors.grey1 },
+    c = { bg = colors.bg1, fg = colors.grey1 },
+  },
+}
+custom_theme.normal.c.bg = 'None'
+custom_theme.insert.c.bg = 'None'
+custom_theme.visual.c.bg = 'None'
+custom_theme.replace.c.bg = 'None'
+custom_theme.command.c.bg = 'None'
+custom_theme.inactive.c.bg = 'None'
+
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = custom_theme,
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {
+      statusline = {},
+      winbar = {},
+    },
+    ignore_focus = {},
+    always_divide_middle = true,
+    globalstatus = false,
+    refresh = {
+      statusline = 1000,
+      tabline = 1000,
+      winbar = 1000,
+    }
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {
+    lualine_a = {'fileformat'},
+    lualine_c = {
+      {'tabs',
+        mode = 2,
+        use_mode_colors = false,
+        show_modified_status = true,
+        symbols = {
+          modified = '[+]',
+         },
+         tabs_color = {
+         active = {fg = 'white'},
+         inactive = {fg = 'gray'},
+         }
+      }
+    },
+    lualine_z = {'hostname'},
+  },
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {}
+}
 
 -- Setup nvim-lsp
 local lspconfig = require('lspconfig')
