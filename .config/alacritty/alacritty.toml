@@ -41,10 +41,6 @@ red = "0xd54e53"
 white = "0xffffff"
 yellow = "0xe6c547"
 
-[colors.primary]
-background = "0x002b36"
-foreground = "0x839496"
-
 [env]
 TERM = "alacritty"
 
@@ -577,7 +573,7 @@ semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 
 [window]
 dynamic_title = true
-opacity = 0.95
+opacity = 0.98
 
 [window.dimensions]
 columns = 160
