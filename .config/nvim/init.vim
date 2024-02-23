@@ -5,7 +5,6 @@ Plug 'shaunsingh/seoul256.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim'
 Plug 'ojroques/nvim-osc52', {'branch': 'main'}
-Plug 'stevearc/oil.nvim'
 Plug 'ggandor/leap.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 call plug#end()
@@ -173,9 +172,6 @@ vim.api.nvim_set_hl(0, 'LeapLabelSecondary', {
 vim.keymap.set({'n', 'v'}, 's', function ()
   require('leap').leap { target_windows = { vim.api.nvim_get_current_win() } }
 end)
-
--- Setup oil file browser
-require("oil").setup()
 
 -- Setup lualine
 -- Colors from seoul256
