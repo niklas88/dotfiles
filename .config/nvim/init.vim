@@ -275,6 +275,7 @@ require('lualine').setup {
     lualine_c = {
       {'tabs',
         mode = 2,
+        max_length = vim.o.columns,
         use_mode_colors = false,
         show_modified_status = true,
         symbols = {
