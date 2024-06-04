@@ -174,85 +174,10 @@ vim.keymap.set({'n', 'v'}, 's', function ()
 end)
 
 -- Setup lualine
--- Colors from catppuccin-mocha
-local colors = {
-  rosewater='#f5e0dc',
-  flamingo='#f2cdcd',
-  pink='#f5c2e7',
-  mauve='#cba6f7',
-  red='#f38ba8',
-  maroon='#eba0ac',
-  peach='#fab387',
-  yellow='#f9e2af',
-  green='#a6e3a1',
-  teal='#94e2d5',
-  sky='#89dceb',
-  sapphire='#74c7ec',
-  blue='#89b4fa',
-  lavender='#b4befe',
-  text='#cdd6f4',
-  subtext1='#bac2de',
-  subtext0='#a6adc8',
-  overlay2='#9399b2',
-  overlay1='#7f849c',
-  overlay0='#6c7086',
-  surface2='#585b70',
-  surface1='#45475a',
-  surface0='#313244',
-  base='#1e1e2e',
-  mantle='#181825',
-  crust='#11111b',
-  none='None',
-}
-
-local custom_theme = {
-  normal = {
-    a = { bg = colors.pink, fg = colors.base, gui = 'bold' },
-    b = { bg = colors.sapphire, fg = colors.base },
-    c = { bg = colors.none, fg = colors.text },
-  },
-  insert = {
-    a = { bg = colors.teal, fg = colors.base, gui = 'bold' },
-    b = { bg = colors.sapphire, fg = colors.base },
-    c = { bg = colors.none, fg = colors.text },
-  },
-  visual = {
-    a = { bg = colors.red, fg = colors.base, gui = 'bold' },
-    b = { bg = colors.sapphire, fg = colors.base },
-    c = { bg = colors.none, fg = colors.text },
-  },
-  replace = {
-    a = { bg = colors.orange, fg = colors.grey2, gui = 'bold' },
-    b = { bg = colors.sapphire, fg = colors.base },
-    c = { bg = colors.none, fg = colors.text },
-  },
-  command = {
-    a = { bg = colors.purple, fg = colors.text, gui = 'bold' },
-    b = { bg = colors.sapphire, fg = colors.base },
-    c = { bg = colors.none, fg = colors.text },
-  },
-  terminal = {
-    a = { bg = colors.purple, fg = colors.none, gui = 'bold' },
-    b = { bg = colors.sapphire, fg = colors.base },
-    c = { bg = colors.none, fg = colors.text },
-  },
-  inactive = {
-    a = { bg = colors.none, fg = colors.overlay2, gui = 'bold' },
-    b = { bg = colors.none, fg = colors.overlay2 },
-    c = { bg = colors.none, fg = colors.overlay2 },
-  },
-}
-custom_theme.normal.c.bg = 'None'
-custom_theme.insert.c.bg = 'None'
-custom_theme.visual.c.bg = 'None'
-custom_theme.replace.c.bg = 'None'
-custom_theme.command.c.bg = 'None'
-custom_theme.inactive.c.bg = 'None'
-
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = custom_theme,
+    theme = "catppuccin",
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
     disabled_filetypes = {
