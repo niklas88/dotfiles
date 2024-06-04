@@ -152,7 +152,10 @@ vim.g.clipboard = {
 vim.opt.clipboard = "unnamedplus"
 
 --  Color --
-vim.cmd.colorscheme "catppuccin-mocha"
+require("catppuccin").setup({
+    transparent_background = true, -- disables setting the background color.
+})
+vim.cmd.colorscheme "catppuccin"
 -- Setup leap.nvim
 require('leap').create_default_mappings()
 require('leap').opts.safe_labels = {}
