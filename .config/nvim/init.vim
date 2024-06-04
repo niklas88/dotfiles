@@ -1,7 +1,7 @@
 " Vim-Plug
 call plug#begin('~/.config/nvim/plugged')
 Plug 'editorconfig/editorconfig-vim'
-Plug 'shaunsingh/seoul256.nvim'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'neovim/nvim-lspconfig'
 Plug 'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim'
 Plug 'ojroques/nvim-osc52', {'branch': 'main'}
@@ -67,8 +67,6 @@ set secure
 syntax on
 "" Don't be disruptive with LSP hints
 set signcolumn=no
-let g:seoul256_disable_background = v:true
-colo seoul256
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
 set termguicolors
@@ -153,6 +151,8 @@ vim.g.clipboard = {
 
 vim.opt.clipboard = "unnamedplus"
 
+--  Color --
+vim.cmd.colorscheme "catppuccin-mocha"
 -- Setup leap.nvim
 require('leap').create_default_mappings()
 require('leap').opts.safe_labels = {}
@@ -174,36 +174,36 @@ vim.keymap.set({'n', 'v'}, 's', function ()
 end)
 
 -- Setup lualine
--- Colors from seoul256
+-- Colors from catppuccin-mocha
 local colors = {
-  bg1    = '#3c474d',
-  bg3    = '#505a60',
-  fg =     "#565656",
-  aqua = "#93b2b2",
-  paleblue = "#afeeee",
-  green = "#678568",
-  orange = "#67a9aa",
-  purple = "#c66d86",
-  red = "#a07474",
-  pink = "#d0a39f",
-  grey1  = '#868d80',
-  grey2    = '#323d43',
-  white = "#dfe0e0",
+  bg1    = '#1e1e2e',
+  bg3    = '#7f849c',
+  fg =     '#cdd6f4',
+  aqua = "#89b4fa",
+  paleblue = "#cdd6f4",
+  green = "#a6e3a1",
+  orange = "#fab387",
+  purple = "#cba6f7",
+  red = "#f38ba8",
+  pink = "#f5c2e7",
+  grey1  = '#7f849c',
+  grey2    = '#9399b2',
+  white = "#cdd6f4",
 }
 
 local custom_theme = {
   normal = {
-    a = { bg = colors.aqua, fg = colors.grey2, gui = 'bold' },
+    a = { bg = colors.purple, fg = colors.fg, gui = 'bold' },
     b = { bg = colors.bg3, fg = colors.fg },
     c = { bg = colors.bg1, fg = colors.fg },
   },
   insert = {
-    a = { bg = colors.green, fg = colors.white, gui = 'bold' },
+    a = { bg = colors.red, fg = colors.fg, gui = 'bold' },
     b = { bg = colors.bg3, fg = colors.fg },
     c = { bg = colors.bg1, fg = colors.fg },
   },
   visual = {
-    a = { bg = colors.pink, fg = colors.grey2, gui = 'bold' },
+    a = { bg = colors.pink, fg = colors.fg, gui = 'bold' },
     b = { bg = colors.bg3, fg = colors.fg },
     c = { bg = colors.bg1, fg = colors.fg },
   },
@@ -213,7 +213,7 @@ local custom_theme = {
     c = { bg = colors.bg1, fg = colors.fg },
   },
   command = {
-    a = { bg = colors.aqua, fg = colors.grey2, gui = 'bold' },
+    a = { bg = colors.purple, fg = colors.fg, gui = 'bold' },
     b = { bg = colors.bg3, fg = colors.fg },
     c = { bg = colors.bg1, fg = colors.fg },
   },
