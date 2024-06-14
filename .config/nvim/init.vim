@@ -4,7 +4,6 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'neovim/nvim-lspconfig'
 Plug 'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim'
-Plug 'ojroques/nvim-osc52', {'branch': 'main'}
 Plug 'ggandor/leap.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 call plug#end()
@@ -128,27 +127,21 @@ let g:c_syntax_for_h = 1
 " Lua Section
 lua << EOF
 -- Clipboard
-local function osccopy(lines, _)
-  require('osc52').copy(table.concat(lines, '\n'))
-end
-
-local function oscpaste()
+local function paste()
   return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')}
 end
 
 vim.g.clipboard = {
-  name = 'osc52',
+  name = 'OSC 52',
   copy = {
-          ['+'] = osccopy,
-          ['*'] = osccopy
-          },
-  paste = {
-          ['+'] = oscpaste,
-          ['*'] = oscpaste
+    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
   },
-  cache_enabled = 1,
+  paste = {
+    ['+'] = paste,
+    ['*'] = paste,
+  },
 }
-
 vim.opt.clipboard = "unnamedplus"
 
 --  Color --
