@@ -16,3 +16,7 @@ fixssh() {
 
 source_if_exists "$HOME/.cargo/env"
 source_if_exists "$HOME/.zshenv_local"
+
+if command -v "zoxide" &> /dev/null; then
+    eval "$(zoxide init --cmd cd zsh)"
+fi
