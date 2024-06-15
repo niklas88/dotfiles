@@ -6,6 +6,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim'
 Plug 'ggandor/leap.nvim'
 Plug 'nvim-lualine/lualine.nvim'
+Plug 'stevearc/oil.nvim'
 call plug#end()
 
 " formating options for text
@@ -126,6 +127,10 @@ let g:c_syntax_for_h = 1
 
 " Lua Section
 lua << EOF
+
+-- oil.nvim for file browsing
+require("oil").setup()
+
 -- Clipboard
 local function paste()
   return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')}
