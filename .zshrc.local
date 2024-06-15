@@ -1,0 +1,9 @@
+fixssh() {
+    vars=$(tmux show-env |sed -n 's/^\(SSH_[^=]*\|DISPLAY\)=\(.*\)/export \1="\2"/p')
+    echo $vars
+    eval $vars
+}
+
+if command -v "zoxide" &> /dev/null; then
+    eval "$(zoxide init --cmd cd zsh)"
+fi
