@@ -7,3 +7,6 @@ fixssh() {
 if command -v "zoxide" &> /dev/null; then
     eval "$(zoxide init zsh)"
 fi
+
+alias tmx="tmux -f ~/.tmux_outer.conf new -As0"
+alias weather='curl wttr.in/boeblingen'
