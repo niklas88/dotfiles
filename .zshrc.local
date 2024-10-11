@@ -1,8 +1,9 @@
-fixssh() {
-    vars=$(tmux show-env |sed -n 's/^\(SSH_[^=]*\|DISPLAY\)=\(.*\)/export \1="\2"/p')
-    echo $vars
-    eval $vars
-}
+STABLE_SSH_AUTH_SOCK="$HOME/.ssh/ssh_auth_sock"
+
+# Fix SSH auth socket location so agent forwarding works
+if [ ! -S "${STABLE_SSH_AUTH_SOCK}" ] && [ -S "${SSH_AUTH_SOCK-}" ]; then
+  ln -sf -- "$SSH_AUTH_SOCK" "${STABLE_SSH_AUTH_SOCK}"
+fi
 
 if command -v "zoxide" &> /dev/null; then
     eval "$(zoxide init zsh)"
