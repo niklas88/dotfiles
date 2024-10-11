@@ -159,15 +159,8 @@ require('leap').create_default_mappings()
 require('leap').opts.safe_labels = {}
 -- Leap colors
 vim.api.nvim_set_hl(0, 'LeapBackdrop', { fg = 'gray47' }) -- or some grey
-vim.api.nvim_set_hl(0, 'LeapMatch', {
-  -- For light themes, set to 'black' or similar.
-  fg = 'white', bold = true, nocombine = true,
-})
-vim.api.nvim_set_hl(0, 'LeapLabelPrimary', {
+vim.api.nvim_set_hl(0, 'LeapLabel', {
   fg = 'coral', bold = true, nocombine = true,
-})
-vim.api.nvim_set_hl(0, 'LeapLabelSecondary', {
-  fg = 'LightYellow', bold = true, nocombine = true,
 })
 
 vim.keymap.set({'n', 'v'}, 's', function ()
