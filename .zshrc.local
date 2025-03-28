@@ -13,3 +13,6 @@ alias tmx="tmux -f ~/.tmux_outer.conf new -As0"
 alias weather='curl wttr.in/boeblingen'
 alias occ='docker exec -u 33 -it nextc-app-1 /var/www/html/occ'
 alias hx='helix'
+
+# Turn off telling me about other users
+watch=()
