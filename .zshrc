@@ -490,11 +490,13 @@ function xcat () {
 }
 
 # Remove these functions again, they are of use only in these
-# setup files. This should be called at the end of .zshrc.
+# setup files.
 function xunfunction () {
     emulate -L zsh
     local -a funcs
     local func
+    # TODO: Remove xunfunction in 2025.
+    echo "W: xunfunction is deprecated. Please remove it from your configuration."
     funcs=(salias xcat xsource xunfunction zrcautoload zrcautozle)
     for func in $funcs ; do
         [[ -n ${functions[$func]} ]] \
@@ -2617,16 +2619,23 @@ if [[ -r /etc/debian_version ]] ; then
           salias agi="apt-get install"
           salias au="apt-get update"
         fi
-        #a3# Execute \kbd{aptitude install}
-        salias ati="aptitude install"
-        #a3# Execute \kbd{aptitude update ; aptitude safe-upgrade}
-        salias -a up="aptitude update ; aptitude safe-upgrade"
-        #a3# Execute \kbd{dpkg-buildpackage}
-        alias dbp='dpkg-buildpackage'
+        if check_com -c aptitude ; then
+          #a3# Execute \kbd{aptitude install}
+          salias ati="aptitude install"
+          #a3# Execute \kbd{aptitude update ; aptitude safe-upgrade}
+          salias -a up="aptitude update ; aptitude safe-upgrade"
+        fi
+        if check_com -c dpkg-buildpackage ; then
+          #a3# Execute \kbd{dpkg-buildpackage}
+          alias dbp='dpkg-buildpackage'
+        fi
         #a3# Execute \kbd{grep-excuses}
-        alias ge='grep-excuses'
+        if check_com -c grep-excuses ; then
+          alias ge='grep-excuses'
+        fi
         if check_com -c apt-file ; then
           alias afs='apt-file search'
+          alias afl='apt-file list'
         fi
     fi
 
@@ -2662,7 +2671,9 @@ fi
 # grmlstuff
 function grmlstuff () {
     #a1# Output version of running grml
-    alias grml-version='cat /etc/grml_version'
+    if [ -r /etc/grml_version ]; then
+      alias grml-version='cat /etc/grml_version'
+    fi
 
     if check_com -c grml-debootstrap ; then
         function debian2hd () {
@@ -2926,7 +2937,7 @@ if [[ -d /etc/init.d || -d /etc/service ]] ; then
         if [[ $service_target_ == "/usr/bin/sv" ]]; then
             # runit
             case "${action_}" in
-                start) if [[ ! -e /etc/service/$service_ ]]; then
+                start) if [[ -d /etc/service ]] && [[ ! -e /etc/service/$service_ ]]; then
                            $SUDO ln -s "/etc/sv/$service_" "/etc/service/"
                        else
                            $SUDO "/etc/init.d/$service_" "${action_}" "$param_"
@@ -2995,7 +3006,7 @@ function H-Glob () {
   chmod 644 *(.^x)      # make all plain non-executable files publically readable
   print -l *(.c|.h)     # Lists *.c and *.h
   print **/*(g:users:)  # Recursively match all files that are owned by group 'users'
-  echo /proc/*/cwd(:h:t:s/self//) # Analogous to >ps ax | awk '{print $1}'<"
+  echo /proc/*/cwd(:h:t:s/self//) # Analogous to >ps ax | awk '{print \$1}'<"
 }
 alias help-zshglob=H-Glob
 
@@ -3143,6 +3154,9 @@ alias rmcdir='cd ..; rmdir $OLDPWD || cd $OLDPWD'
 alias insecssh='ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null"'
 #a2# scp with StrictHostKeyChecking=no \\&\quad and UserKnownHostsFile unset
 alias insecscp='scp -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null"'
+
+#a2# lsblk (list block devices) with the most useful columns
+alias llblk="lsblk -o +LABEL,PARTLABEL,UUID,FSTYPE,SERIAL"
 
 # useful functions
 
@@ -3297,21 +3311,23 @@ fi
 #  $ awk -F ':' '{ print $2" : "$1" "$3 }' \
 #    /usr/local/lib/words/en-de.ISO-8859-1.vok > ~/.translate/de-en.ISO-8859-1.vok
 #f5# Translates a word
-function trans () {
-    emulate -L zsh
-    case "$1" in
-        -[dD]*)
-            translate -l de-en $2
-            ;;
-        -[eE]*)
-            translate -l en-de $2
-            ;;
-        *)
-            echo "Usage: $0 { -D | -E }"
-            echo "         -D == German to English"
-            echo "         -E == English to German"
-    esac
-}
+if ! check_com -c trans; then
+  function trans () {
+      emulate -L zsh
+      case "$1" in
+          -[dD]*)
+              translate -l de-en $2
+              ;;
+          -[eE]*)
+              translate -l en-de $2
+              ;;
+          *)
+              echo "Usage: $0 { -D | -E }"
+              echo "         -D == German to English"
+              echo "         -E == English to German"
+      esac
+  }
+fi
 
 # Usage: simple-extract <file>
 # Using option -d deletes the original archive file.
@@ -3567,10 +3583,6 @@ if check_com -c hg ; then
         local i
         for i in $(hg status -marn "$@") ; diff -ubwd <(hg cat "$i") "$i"
     }
-
-    # build debian package
-    #a2# Alias for \kbd{hg-buildpackage}
-    alias hbp='hg-buildpackage'
 
     # execute commands on the versioned patch-queue from the current repos
     [[ -n "$GRML_NO_SMALL_ALIASES" ]] || alias mq='hg -R $(readlink -f $(hg root)/.hg/patches)'
