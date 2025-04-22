@@ -15,8 +15,28 @@ alias occ='docker exec -u 33 -it nextc-app-1 /var/www/html/occ'
 alias hx='helix'
 
 notify-osc () {
-	printf '\x1bPtmux;\x1b\x1b]99;i=1:d=0:w=-1:e=1;'$(echo $1 | base64)'\x1b\x1b\x1b\\'
-	printf '\x1bPtmux;\x1b\x1b]99;i=1:p=body:e=1;'$(echo $2 | base64)'\x1b\x1b\x1b\\'
+	if [[ "$#" -lt 1 ]]; then
+		echo "$0 <title> <body>"
+		return 1;
+	fi
+	local title=$1
+	local notification_id=$RANDOM
+
+
+	if [[ "$#" -lt 2 ]]; then
+		local body='n/a'
+	else
+		local body=$2
+	fi
+
+	if [[ -z "$TMUX" ]]; then
+		printf '\x1b]99;i='$notification_id':d=0:w=0:e=1;'$(echo $title | base64)'\x1b\\'
+		printf '\x1b]99;i='$notification_id':p=body:e=1;'$(echo $body | base64)'\x1b\\'
+	else
+		printf '\x1bPtmux;\x1b\x1b]99;i='$notification_id':d=0:w=0:e=1;'$(echo $title | base64)'\x1b\x1b\x1b\\'
+		printf '\x1bPtmux;\x1b\x1b]99;i='$notification_id':p=body:e=1;'$(echo $body | base64)'\x1b\x1b\x1b\\'
+	fi
+	notify_osc_cnt+=1
 }
 
 # Turn off telling me about other users
