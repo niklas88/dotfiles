@@ -3,7 +3,6 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'editorconfig/editorconfig-vim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'neovim/nvim-lspconfig'
-Plug 'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim'
 Plug 'ggandor/leap.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'stevearc/oil.nvim'
@@ -231,14 +230,12 @@ require('lualine').setup {
 
 -- Setup nvim-lsp
 local lspconfig = require('lspconfig')
-local tgl = require('toggle_lsp_diagnostics')
-
-tgl.init()
 
 vim.diagnostic.config({
   float = {
     border = 'rounded',
   },
+  virtual_lines = true,
 })
 
 local function on_list(options)
@@ -252,13 +249,16 @@ vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
-vim.keymap.set('n', '<F6>', tgl.toggle_diagnostics)
+vim.keymap.set('n', '<F6>', function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+  end, { silent = true, noremap = true })
 
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
+
     -- Enable completion triggered by <c-x><c-o>
     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
