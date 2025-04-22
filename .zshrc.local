@@ -14,5 +14,10 @@ alias weather='curl wttr.in/boeblingen'
 alias occ='docker exec -u 33 -it nextc-app-1 /var/www/html/occ'
 alias hx='helix'
 
+notify-osc () {
+	printf '\x1b]99;i=1:d=0:w=0:e=1;'$(echo $1 | base64)'\x1b\\'
+	printf '\x1b]99;i=1:p=body:e=1;'$(echo $2 | base64)'\x1b\\'
+}
+
 # Turn off telling me about other users
 watch=()
