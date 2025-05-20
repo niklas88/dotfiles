@@ -235,7 +235,7 @@ vim.diagnostic.config({
   float = {
     border = 'rounded',
   },
-  virtual_lines = true,
+  virtual_text = true,
 })
 
 local function on_list(options)
