@@ -247,9 +247,6 @@ require('lualine').setup {
   extensions = {}
 }
 
--- Setup nvim-lsp
-local lspconfig = require('lspconfig')
-
 vim.diagnostic.config({
   float = {
     border = 'rounded',
@@ -320,33 +317,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-lspconfig.rust_analyzer.setup({
-    on_attach=on_attach,
-    settings = {
-        ["rust-analyzer"] = {
-            imports = {
-                granularity = {
-                    group = "module",
-                },
-                prefix = "self",
-            },
-            cargo = {
-                buildScripts = {
-                    enable = true,
-                },
-            },
-            procMacro = {
-                enable = true
-            },
-            check = {
-                command = "clippy",
-            },
-        }
-    }
-})
-
-lspconfig.clangd.setup({
-    on_attach=on_attach,
-})
+vim.lsp.enable("rust_analyzer")
+vim.lsp.enable("clangd")
 
 EOF
