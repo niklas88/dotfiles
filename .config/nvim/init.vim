@@ -6,6 +6,8 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'ggandor/leap.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'stevearc/oil.nvim'
+Plug 'ibhagwan/fzf-lua'
+Plug 'nvim-tree/nvim-web-devicons'
 call plug#end()
 
 " formating options for text
