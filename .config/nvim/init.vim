@@ -175,7 +175,8 @@ require("catppuccin").setup({
 })
 vim.cmd.colorscheme "catppuccin"
 -- Setup leap.nvim
-require('leap').create_default_mappings()
+vim.keymap.set({'n', 'x', 'o'}, 's', '<Plug>(leap)')
+vim.keymap.set('n',             'S', '<Plug>(leap-from-window)')
 require('leap').opts.safe_labels = {}
 -- Leap colors
 vim.api.nvim_set_hl(0, 'LeapBackdrop', { fg = 'gray47' }) -- or some grey
