@@ -8,6 +8,7 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'stevearc/oil.nvim'
 Plug 'ibhagwan/fzf-lua'
 Plug 'nvim-tree/nvim-web-devicons'
+Plug 'stevearc/conform.nvim'
 call plug#end()
 
 " formating options for text
@@ -322,5 +323,23 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("clangd")
+
+-- conform
+require("conform").setup({
+    formatters_by_ft = {
+        html = { "djlint" },
+        htmldjango = { "djlint" },
+        jinja = { "djlint" },
+        lua = { "stylua" },
+        python = { "isort", "black" },
+        rust = { "rustfmt", lsp_format = "fallback" },
+        c = { "clang-format", lsp_format = "fallbak" },
+        css = { "css_beautify" },
+        yaml = { "yamlfmt" },
+    },
+})
+vim.keymap.set({"n", "v"}, "<space>f", function()
+    require("conform").format({ async = true, lsp_fallback = true })
+end)
 
 EOF
