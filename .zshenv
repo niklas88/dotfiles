@@ -5,6 +5,5 @@ source_if_exists () {
 export PATH=~/.local/bin:$PATH
 export EDITOR=nvim
 
-source_if_exists "$HOME/.cargo/env"
 source_if_exists "$HOME/.zshenv_local"
 source_if_exists "$HOME/.cargo/env"
