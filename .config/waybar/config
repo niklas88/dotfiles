@@ -1,0 +1,53 @@
+{
+    "layer": "top",
+    "position": "top",
+    "modules-left": ["custom/archicon", "sway/workspaces"],
+    "modules-right": ["pulseaudio", "backlight", "battery", "custom/lock", "custom/power", "tray", "clock"],
+    "custom/archicon": {
+      "format": "   ",
+      "on-click": "wofi --show drun",
+      "tooltip": false
+    },
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    },
+    "clock": {
+        "timezone": "Europe/Berlin",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%Y-%m-%d}",
+        "format": "{:%H:%M}"
+    },
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{icon} {volume}%",
+        "format-muted": "",
+        "format-icons": {
+            "default": ["", "", " "]
+        },
+        "on-click": "pavucontrol-qt"
+    },
+    "custom/lock": {
+        "tooltip": false,
+        "on-click": "sh -c '(swaylock)' & disown",
+        "format": "",
+    },
+    "custom/power": {
+        "tooltip": false,
+        "on-click": "swaymsg exit",
+        "format": ""
+    }
+}
