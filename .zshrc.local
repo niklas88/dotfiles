@@ -41,3 +41,8 @@ notify-osc () {
 
 # Turn off telling me about other users
 watch=()
+# catppuccin the prompt
+zstyle ':prompt:grml:*:items:user' pre '%B%F{#cba6f7}' # mauve
+zstyle ':prompt:grml:*:items:at' pre '%B%F{#cdd6f4}'   # lavender
+zstyle ':prompt:grml:*:items:host' pre '%B%F{#cdd6f4}' # lavender
+zstyle ':prompt:grml:*:items:path' pre '%F{#cdd6f4}'   # text
