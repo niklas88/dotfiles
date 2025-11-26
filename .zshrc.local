@@ -42,7 +42,12 @@ notify-osc () {
 # Turn off telling me about other users
 watch=()
 # catppuccin the prompt
-zstyle ':prompt:grml:*:items:user' pre '%B%F{#cba6f7}' # mauve
+if (( EUID == 0 )); then
+    zstyle ':prompt:grml:*:items:user' pre '%B%F{#f38ba8}' # red
+else
+    zstyle ':prompt:grml:*:items:user' pre '%B%F{#cba6f7}' # mauve
+fi
 zstyle ':prompt:grml:*:items:at' pre '%B%F{#cdd6f4}'   # lavender
 zstyle ':prompt:grml:*:items:host' pre '%B%F{#cdd6f4}' # lavender
 zstyle ':prompt:grml:*:items:path' pre '%F{#cdd6f4}'   # text
+
