@@ -49,5 +49,5 @@ else
 fi
 zstyle ':prompt:grml:*:items:at' pre '%B%F{#cdd6f4}'   # lavender
 zstyle ':prompt:grml:*:items:host' pre '%B%F{#cdd6f4}' # lavender
-zstyle ':prompt:grml:*:items:path' pre '%F{#cdd6f4}'   # text
+zstyle ':prompt:grml:*:items:path' pre '%b%F{#cdd6f4}' # text non-bold
 
