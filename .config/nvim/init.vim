@@ -65,10 +65,11 @@ set secure
 
 syntax on
 "" Don't be disruptive with LSP hints
-set signcolumn=no
+set signcolumn=number
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
 set termguicolors
+set laststatus=3
 
 "" Go setup
 let g:go_version_warning = 0
@@ -195,7 +196,7 @@ require('lualine').setup {
     },
     ignore_focus = {},
     always_divide_middle = true,
-    globalstatus = false,
+    globalstatus = true,
     refresh = {
       statusline = 1000,
       tabline = 1000,
@@ -281,10 +282,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
         {border = 'rounded'}
     )
     vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-    vim.lsp.handlers.signature_help,
-      {border = 'rounded'}
-    )
-    vim.lsp.handlers['textDocument/diagnostics'] = vim.lsp.with(
     vim.lsp.handlers.signature_help,
       {border = 'rounded'}
     )
