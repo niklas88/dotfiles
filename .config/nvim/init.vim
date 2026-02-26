@@ -323,7 +323,7 @@ require("conform").setup({
         lua = { "stylua" },
         python = { "isort", "black" },
         rust = { "rustfmt", lsp_format = "fallback" },
-        c = { "clang-format", lsp_format = "fallbak" },
+        c = { "clang-format", lsp_format = "fallback" },
         css = { "css_beautify" },
         yaml = { "yamlfmt" },
     },
