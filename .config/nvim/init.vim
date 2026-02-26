@@ -17,9 +17,6 @@ set formatoptions=qrm1
 set nowrap
 set textwidth=79
 
-"" No need to be compatible with vi and lose features.
-set nocompatible
-
 filetype plugin on
 filetype indent on
 
@@ -105,8 +102,8 @@ map <A-Left>  <C-W><Left><C-W>|
 map <A-Right> <C-W><Right><C-W>|
 
 "" Quickfix navigation
-map <C-j> :cn<CR>
-map <C-k> :cp<CR>
+map [q :cp<CR>
+map ]q :cn<CR>
 
 " More logical Y (defaul was alias for yy)
 nnoremap Y y$
@@ -184,10 +181,6 @@ vim.api.nvim_set_hl(0, 'LeapBackdrop', { fg = 'gray47' }) -- or some grey
 vim.api.nvim_set_hl(0, 'LeapLabel', {
   fg = 'coral', bold = true, nocombine = true,
 })
-
-vim.keymap.set({'n', 'v'}, 's', function ()
-  require('leap').leap { target_windows = { vim.api.nvim_get_current_win() } }
-end)
 
 -- Setup lualine
 require('lualine').setup {
