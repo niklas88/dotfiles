@@ -97,14 +97,14 @@ vnoremap < <gv
 vnoremap > >gv
 
 "" Cycling through Windows quicker.
-map <A-Down>  <C-W><Down><C-W>_
-map <A-Up>    <C-W><Up><C-W>_
-map <A-Left>  <C-W><Left><C-W>|
-map <A-Right> <C-W><Right><C-W>|
+nnoremap <A-Down>  <C-W><Down><C-W>_
+nnoremap <A-Up>    <C-W><Up><C-W>_
+nnoremap <A-Left>  <C-W><Left><C-W>|
+nnoremap <A-Right> <C-W><Right><C-W>|
 
 "" Quickfix navigation
-map [q :cp<CR>
-map ]q :cn<CR>
+nnoremap [q :cp<CR>
+nnoremap ]q :cn<CR>
 
 " More logical Y (defaul was alias for yy)
 nnoremap Y y$
