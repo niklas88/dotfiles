@@ -128,6 +128,14 @@ let g:c_syntax_for_h = 1
 " Lua Section
 lua << EOF
 
+vim.g.mapleader = " "
+
+-- fzf-lua mappings
+vim.keymap.set("n", "<leader>ff", require('fzf-lua').files, { desc = "Fzf Files" })
+vim.keymap.set("n", "<leader>fg", require('fzf-lua').live_grep, { desc = "Fzf Live Grep" })
+vim.keymap.set("n", "<leader>ft", require('fzf-lua').buffers, { desc = "Fzf Tabs" })
+vim.keymap.set("n", "<leader>fh", require('fzf-lua').help_tags, { desc = "Fzf Help" })
+
 -- oil.nvim for file browsing
 require("oil").setup({
   keymaps = {
