@@ -3,7 +3,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'editorconfig/editorconfig-vim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'neovim/nvim-lspconfig'
-Plug 'ggandor/leap.nvim'
+Plug 'https://codeberg.org/andyg/leap.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'stevearc/oil.nvim'
 Plug 'ibhagwan/fzf-lua'
