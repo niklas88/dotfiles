@@ -59,12 +59,6 @@ end, { expr = true, replace_keycodes = true })
 vim.keymap.set('v', '<', '<gv')
 vim.keymap.set('v', '>', '>gv')
 
--- Window navigation
-vim.keymap.set('n', '<A-Down>', '<C-W><Down><C-W>_')
-vim.keymap.set('n', '<A-Up>', '<C-W><Up><C-W>_')
-vim.keymap.set('n', '<A-Left>', '<C-W><Left><C-W>|')
-vim.keymap.set('n', '<A-Right>', '<C-W><Right><C-W>|')
-
 -- Quickfix navigation
 vim.keymap.set('n', '[q', ':cp<CR>')
 vim.keymap.set('n', ']q', ':cn<CR>')
@@ -190,10 +184,10 @@ vim.diagnostic.config({
 })
 
 -- LSP mappings
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 vim.keymap.set('n', '<F6>', function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { silent = true, noremap = true })
@@ -210,21 +204,21 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gr', function()
         vim.lsp.buf.references(nil, {on_list=on_list})
     end, opts)
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', 'K', function()
       vim.lsp.buf.hover({ border = 'rounded' })
     end, opts)
     vim.keymap.set('n', 'sh', function()
       vim.lsp.buf.signature_help({ border = 'rounded' })
     end, opts)
-    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-    vim.keymap.set('n', '<space>wl', function()
+    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+    vim.keymap.set('n', '<leader>wl', function()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, opts)
-    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-    vim.keymap.set('n', '<space>f', function()
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', '<leader>f', function()
       vim.lsp.buf.format { async = true }
     end, opts)
   end,
@@ -250,6 +244,6 @@ require("conform").setup({
         yaml = { "yamlfmt" },
     },
 })
-vim.keymap.set({"n", "v"}, "<space>f", function()
+vim.keymap.set({"n", "v"}, "<leader>f", function()
     require("conform").format({ async = true, lsp_fallback = true })
 end)
