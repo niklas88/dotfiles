@@ -108,6 +108,7 @@ vim.keymap.set("n", "<leader>ff", require('fzf-lua').files, { desc = "Fzf Files"
 vim.keymap.set("n", "<leader>fg", require('fzf-lua').live_grep, { desc = "Fzf Live Grep" })
 vim.keymap.set("n", "<leader>ft", require('fzf-lua').buffers, { desc = "Fzf Tabs" })
 vim.keymap.set("n", "<leader>fh", require('fzf-lua').help_tags, { desc = "Fzf Help" })
+vim.keymap.set('n', '<leader>fr', require('fzf-lua').lsp_references, opts)
 
 -- oil.nvim
 require("oil").setup({
