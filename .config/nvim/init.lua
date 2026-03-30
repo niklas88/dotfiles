@@ -60,8 +60,8 @@ vim.keymap.set('v', '<', '<gv')
 vim.keymap.set('v', '>', '>gv')
 
 -- Quickfix navigation
-vim.keymap.set('n', '[q', ':cp<CR>')
-vim.keymap.set('n', ']q', ':cn<CR>')
+vim.keymap.set('n', '<C-j>', ':cn<CR>')
+vim.keymap.set('n', '<C-k>', ':cp<CR>')
 
 -- More logical Y
 vim.keymap.set('n', 'Y', 'y$')
@@ -185,8 +185,6 @@ vim.diagnostic.config({
 
 -- LSP mappings
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 vim.keymap.set('n', '<F6>', function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
@@ -196,6 +194,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+    local function on_list(options)
+      vim.fn.setqflist({}, ' ', options)
+      vim.cmd.cfirst()
+    end
 
     local opts = { buffer = ev.buf }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)

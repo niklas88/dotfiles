@@ -20,7 +20,7 @@ The **Leader** key is set to `<Space>`.
 | `c` | Change without yanking to default register (`"xc`) |
 | `p` (Visual) | Paste without overwriting default register |
 | `<` / `>` | Indent/Outdent and keep visual selection |
-| `[q` / `]q` | Navigate Quickfix list |
+| `<C-j>` / `<C-k>` | Navigate Quickfix list |
 
 ### Navigation & Fuzzy Finder (fzf-lua)
 | Key | Action |
