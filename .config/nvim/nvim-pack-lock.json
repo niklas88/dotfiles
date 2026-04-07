@@ -1,0 +1,40 @@
+{
+  "plugins": {
+    "catppuccin": {
+      "rev": "426dbebe06b5c69fd846ceb17b42e12f890aedf1",
+      "src": "https://github.com/catppuccin/nvim"
+    },
+    "conform.nvim": {
+      "rev": "086a40dc7ed8242c03be9f47fbcee68699cc2395",
+      "src": "https://github.com/stevearc/conform.nvim"
+    },
+    "editorconfig-vim": {
+      "rev": "c0227885a06b155d5aa5465e08b9800e8c939f70",
+      "src": "https://github.com/editorconfig/editorconfig-vim"
+    },
+    "fzf-lua": {
+      "rev": "9f0432fdd7825ab163520045831a40b6df82ea28",
+      "src": "https://github.com/ibhagwan/fzf-lua"
+    },
+    "leap.nvim": {
+      "rev": "b960d5038c5c505c52e56a54490f9bbb1f0e6ef6",
+      "src": "https://codeberg.org/andyg/leap.nvim"
+    },
+    "lualine.nvim": {
+      "rev": "8811f3f3f4dc09d740c67e9ce399e7a541e2e5b2",
+      "src": "https://github.com/nvim-lualine/lualine.nvim"
+    },
+    "nvim-lspconfig": {
+      "rev": "bedca8b426b2fee0ccac596d167d71bbe971253f",
+      "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "nvim-web-devicons": {
+      "rev": "95b7a002d5dba1a42eb58f5fac5c565a485eefd0",
+      "src": "https://github.com/nvim-tree/nvim-web-devicons"
+    },
+    "oil.nvim": {
+      "rev": "0fcc83805ad11cf714a949c98c605ed717e0b83e",
+      "src": "https://github.com/stevearc/oil.nvim"
+    }
+  }
+}
