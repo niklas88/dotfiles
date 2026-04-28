@@ -195,7 +195,7 @@ vim.api.nvim_set_hl(0, 'LeapLabel', {
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = "catppuccin",
+    theme = "catppuccin-mocha",
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
     disabled_filetypes = {
