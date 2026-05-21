@@ -149,7 +149,27 @@ require('lualine').setup {
   },
   sections = {
     lualine_a = {'mode'},
-    lualine_b = {'branch', {'diff', colored = false}, {'diagnostics', colored = false}},
+    lualine_b = {
+                 'branch',
+                 {'diff', colored = false},
+                 {
+                   'lsp_status',
+                   icon = '', -- f013
+                   symbols = {
+                     -- Standard unicode symbols to cycle through for LSP progress:
+                     spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
+                     -- Standard unicode symbol for when LSP is done:
+                     done = '✓',
+                     -- Delimiter inserted between LSP names:
+                     separator = ' ',
+                   },
+                   -- List of LSP names to ignore (e.g., `null-ls`):
+                   ignore_lsp = {},
+                   -- Display the LSP name
+                   show_name = true,
+                 },
+                 {'diagnostics', colored = false}
+         },
     lualine_c = {'filename'},
     lualine_x = {'filetype'},
     lualine_y = {'progress'},
