@@ -9,7 +9,7 @@ if command -v "zoxide" &> /dev/null; then
     eval "$(zoxide init zsh)"
 fi
 
-alias tmx="tmux -f ~/.tmux_outer.conf new -As0"
+alias tmx="tmux attach -t M"
 alias weather='curl wttr.in/boeblingen'
 alias occ='docker exec -u 33 -it nextc-app-1 /var/www/html/occ'
 alias hx='helix'
