@@ -43,9 +43,17 @@ notify-osc () {
 watch=()
 # catppuccin the prompt
 if (( EUID == 0 )); then
-    zstyle ':prompt:grml:*:items:user' pre '%B%F{#f38ba8}' # red
+	if [[ -n "$CONTAINER_ID" ]]; then
+		zstyle ':prompt:grml:*:items:user' pre '%B%F{#fab387}' # peach
+	else
+		zstyle ':prompt:grml:*:items:user' pre '%B%F{#f38ba8}' # red
+	fi
 else
-    zstyle ':prompt:grml:*:items:user' pre '%B%F{#cba6f7}' # mauve
+	if [[ -n "$CONTAINER_ID" ]]; then
+		zstyle ':prompt:grml:*:items:user' pre '%B%F{#74c7ec}' # sapphire
+	else
+		zstyle ':prompt:grml:*:items:user' pre '%B%F{#cba6f7}' # mauve
+	fi
 fi
 zstyle ':prompt:grml:*:items:at' pre '%B%F{#cdd6f4}'   # lavender
 zstyle ':prompt:grml:*:items:host' pre '%B%F{#cdd6f4}' # lavender
